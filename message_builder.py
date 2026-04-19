@@ -1,8 +1,10 @@
 import os
 from dataclasses import dataclass
 from openpyxl import load_workbook
-from config import EVENTS_FILE
+from dotenv import load_dotenv
+from config import EVENTS_FILE, ENV_FILE
 
+load_dotenv(ENV_FILE)
 FAMILY_SIGNATURE = os.getenv("FAMILY_SIGNATURE")
 
 HTML_TEMPLATE = """\
