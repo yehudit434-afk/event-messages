@@ -1,0 +1,9 @@
+.env
+Events.xlsx
+!Events.example.xlsx
+__pycache__/
+*.pyc
+dist/
+build/
+*.spec
+*.exe
