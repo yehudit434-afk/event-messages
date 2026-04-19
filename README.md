@@ -60,6 +60,7 @@ Rename `Events.example.xlsx` to `Events.xlsx` and fill in your data.
 SENDER_EMAIL=your-email@gmail.com
 APP_PASSWORD=xxxx-xxxx-xxxx-xxxx
 GROUP_EMAIL=your-group@googlegroups.com
+FAMILY_SIGNATURE=your family signature
 ```
 
 ## 📊 Excel File Structure
