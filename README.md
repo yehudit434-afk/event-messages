@@ -127,7 +127,7 @@ py main.py
 ### Build EXE
 ```bash
 py -m pip install pyinstaller
-py -m PyInstaller --onefile --name FamilyMessages main.py
+py -m PyInstaller --onefile --name EventMessages main.py
 ```
 
 ### Transfer to another computer
