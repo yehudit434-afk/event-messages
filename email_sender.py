@@ -3,6 +3,7 @@ from email.mime.text import MIMEText
 from dotenv import load_dotenv
 import os
 from config import ENV_FILE
+from constants import ERROR_EMAIL_SUBJECT, ERROR_EMAIL_BODY
 
 load_dotenv(ENV_FILE)
 
@@ -29,8 +30,8 @@ def send_email(subject: str, body: str) -> None:
 
 def send_error_email(error: str) -> None:
     """Sends an error notification email to the sender."""
-    msg = MIMEText(f"<html dir='rtl'><body><h3>⚠️ שגיאה בסקריפט שליחת ברכות</h3><pre>{error}</pre></body></html>", "html")
-    msg["Subject"] = "⚠️ שגיאה בסקריפט שליחת ברכות"
+    msg = MIMEText(ERROR_EMAIL_BODY.format(error=error), "html")
+    msg["Subject"] = ERROR_EMAIL_SUBJECT
     msg["From"] = SENDER_EMAIL
     msg["To"] = SENDER_EMAIL
 

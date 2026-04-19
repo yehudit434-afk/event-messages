@@ -6,6 +6,11 @@ from events_reader import (
 from hebrew_date import parse_hebrew_date, get_recent_hebrew_dates
 from message_builder import build_message
 from email_sender import send_email, send_error_email
+from constants import (
+    MSG_SENT, MSG_NO_RECURRING, MSG_NO_TEMPORARY,
+    MSG_RECURRING_HEADER, MSG_TEMPORARY_HEADER,
+    MSG_ERROR, MSG_ERROR_EMAIL_SENT, MSG_ERROR_EMAIL_FAILED,
+)
 
 
 def process_recurring_events():
@@ -20,11 +25,11 @@ def process_recurring_events():
             subject, body = build_message(event)
             send_email(subject=subject, body=body)
             log_sent(event, event.date)
-            print(f"✅ נשלח: {subject}")
+            print(MSG_SENT.format(subject=subject))
             found = True
 
     if not found:
-        print("אין אירועים קבועים לשליחה.")
+        print(MSG_NO_RECURRING)
 
 
 def process_temporary_events():
@@ -32,19 +37,19 @@ def process_temporary_events():
     events = load_temporary_events()
 
     if not events:
-        print("אין אירועים זמניים לשליחה.")
+        print(MSG_NO_TEMPORARY)
 
     for event in events:
         subject, body = build_message(event)
         send_email(subject=subject, body=body)
         mark_as_sent(event)
-        print(f"✅ נשלח: {subject}")
+        print(MSG_SENT.format(subject=subject))
 
 
 def main():
-    print("--- אירועים קבועים ---")
+    print(MSG_RECURRING_HEADER)
     process_recurring_events()
-    print("\n--- אירועים זמניים ---")
+    print(f"\n{MSG_TEMPORARY_HEADER}")
     process_temporary_events()
 
 
@@ -53,9 +58,9 @@ if __name__ == "__main__":
         main()
     except Exception:
         error = traceback.format_exc()
-        print(f"❌ שגיאה:\n{error}")
+        print(MSG_ERROR.format(error=error))
         try:
             send_error_email(error)
-            print("📧 מייל שגיאה נשלח.")
+            print(MSG_ERROR_EMAIL_SENT)
         except Exception:
-            print("❌ לא הצלחתי לשלוח מייל שגיאה.")
+            print(MSG_ERROR_EMAIL_FAILED)
